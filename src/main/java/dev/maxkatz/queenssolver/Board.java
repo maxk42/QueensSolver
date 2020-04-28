@@ -168,6 +168,20 @@ public class Board {
     }
     
     /**
+     * Determine whether a queen may be placed at the given coordinates
+     * 
+     * @return boolean
+     */
+    public boolean testValidPosition(Coord position) {
+        return !(
+                this.rows[position.x]
+                | this.cols[position.y]
+                | this.mains[position.x + position.y]
+                | this.antis[position.x - position.y + this.size - 1]
+        );
+    }
+    
+    /**
      * Produce a string representation of the board.
      * 
      * @return Information about the board and a graphical representation of
