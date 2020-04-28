@@ -212,6 +212,9 @@ public class Board {
         return board.toString();
     }
     
+    /**
+     * clone() override to prevent mutability.
+     */
     @Override
     protected Object clone() {
         Board newBoard = new Board(this.size);
