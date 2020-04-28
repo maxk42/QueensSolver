@@ -211,5 +211,14 @@ public class Board {
         }
         return board.toString();
     }
+    
+    @Override
+    protected Object clone() {
+        Board newBoard = new Board(this.size);
+        for(Coords queen : this.queens) {
+            newBoard.placeQueen(new Coords(queen));
+        }
+        return newBoard;
+    }
 }
 
