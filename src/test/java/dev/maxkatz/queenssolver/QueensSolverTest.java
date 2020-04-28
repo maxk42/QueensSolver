@@ -5,6 +5,7 @@ package dev.maxkatz.queenssolver;
 
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
+import java.util.ArrayList;
 
 class QueensSolverTest {
     /**
@@ -120,5 +121,31 @@ class QueensSolverTest {
         assertArrayEquals(b2.getCols(), expectedCols, "Columns incorrect");
         assertArrayEquals(b2.getMains(), expectedMains, "Main diagonals incorrect");
         assertArrayEquals(b2.getAntis(), expectedAntis, "Anti diagonals incorrect");
+    }
+    
+    /**
+     * Ensure Board objects can be cloned correctly
+     */
+    @Test void testQueensSolver() {
+        int[] solutionCounts = { 1, 0, 0, 2, 10, 4, 40, 92, 352, 724 };
+        for(int i = 1; i <= solutionCounts.length; i++) {
+            QueensSolver qs = new QueensSolver();
+            ArrayList<Board> solutions = qs.testQueens(i);
+            assertEquals(solutions.size(), solutionCounts[i - 1], "Incorrect number of solutions.");
+        }
+    }
+    
+    /**
+     * Test that solutions containing colinear triplets are being stripped.
+     */
+    @Test void testColinearStipper() {
+        QueensSolver qs = new QueensSolver();
+        ArrayList<Board> solutions = qs.testQueens(8);
+        qs.stripColinearTriplets(solutions);
+        assertEquals(solutions.size(), 8, "Incorrect number of solutions.");
+        solutions.clear();
+        solutions = qs.testQueens(5);
+        qs.stripColinearTriplets(solutions);
+        assertEquals(solutions.size(), 0, "Incorrect number of solutions.");
     }
 }
