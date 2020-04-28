@@ -25,7 +25,7 @@ class QueensSolverTest {
     /**
      * Check that the board state is as expected when placing queens.
      */
-    @Test void queenCanBePlaced() {
+    @Test void queenCanBePlacedOnBoard() {
         Board b = new Board(4);
         Coords queen = new Coords(1, 2);
         boolean[] expectedRows = {false, true, false, false};
@@ -37,5 +37,38 @@ class QueensSolverTest {
         assertArrayEquals(b.getCols(), expectedCols, "Columns unequal");
         assertArrayEquals(b.getMains(), expectedMains, "Main diagonals unequal");
         assertArrayEquals(b.getAntis(), expectedAntis, "Anti diagonals unequal");
+    }
+    
+    /**
+     * Check whether Board.testValidPosition() returns correct results
+     */
+    @Test void testValidPositions() {
+        Coords[] positions = {
+            new Coords(0, 0), new Coords(1, 0), new Coords(2, 0),
+            new Coords(0, 1), new Coords(1, 1), new Coords(2, 1),
+            new Coords(0, 2), new Coords(1, 2), new Coords(2, 2)
+        };
+        
+        // First test: On a 3x3 board, the corner position should only have
+        // two valid moves.
+        Board b = new Board(3);
+        Coords queen = new Coords(2, 2);
+        boolean[] expectedResults = {
+            false, true, false,
+            true, false, false,
+            false, false, false
+        };
+        b.placeQueen(queen);
+        for(int i = 0; i < 9; i++) {
+            assertEquals(b.testValidPosition(positions[i]), expectedResults[i], "testValidPositions() returned unexpected result");
+        }
+        
+        // Second test: No valid moves for the center position on a 3x3 board
+        b = new Board(3);
+        Coords centerQueen = new Coords(1, 1);
+        b.placeQueen(centerQueen);
+        for(int i = 0; i < 9; i++) {
+            assertFalse(b.testValidPosition(positions[i]));
+        }
     }
 }
