@@ -3,14 +3,32 @@
  */
 package dev.maxkatz.queenssolver;
 
-public class QueensSolver {
-    public String getGreeting() {
-        return "Hello world.  Inside QueensSolver.";
-    }
+import java.util.ArrayList;
 
+public class QueensSolver {
     public static void main(String[] args) {
-        System.out.println(new Board(8));
-        System.out.println("Done.");
+        int size = 8;
+        if(args.length > 0) {
+            size = Integer.parseInt(args[0]);
+        }
+        Board board = new Board(size);
+        board.placeQueen(new Coords(1, 2));
+        ArrayList<Board> solutions = new ArrayList<Board>();
+        solve();
+        System.out.println("Done.  " + (solutions.size() == 0 ? "No" : solutions.size()) + " solutions found.");
+        printSolutions(solutions);
+        
+    }
+    
+    public static void solve() {
+        
+    }
+    
+    public static void printSolutions(ArrayList<Board> solutions) {
+        int len = solutions.size();
+        for(int i = 0; i < len; i++) {
+            System.out.println("Solution " + i + ":\n" + solutions.get(i) + "\n\n");
+        }
     }
 }
 
