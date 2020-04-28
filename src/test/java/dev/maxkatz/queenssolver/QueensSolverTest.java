@@ -100,4 +100,25 @@ class QueensSolverTest {
         assertArrayEquals(b.getMains(), expectedMainsCleared, "Main diagonals unequal");
         assertArrayEquals(b.getAntis(), expectedAntisCleared, "Anti diagonals unequal");
     }
+    
+    /**
+     * Ensure Board objects can be cloned correctly
+     */
+    @Test void boardsCanBeCloned() {
+        Board b1 = new Board(2);                    // Create a board
+        Coords queen = new Coords(0, 1);
+        b1.placeQueen(queen);                       // Mutate it
+        Board b2 = (Board)((Board) b1).clone();     // Make a copy
+        b1.clearQueen();                            // Mutate the original again
+        
+        // Now test to ensure the copy wasn't mutated
+        boolean[] expectedRows = {true, false};
+        boolean[] expectedCols = {false, true};
+        boolean[] expectedMains = {false, true, false};
+        boolean[] expectedAntis = {true, false, false};
+        assertArrayEquals(b2.getRows(), expectedRows, "Rows incorrect");
+        assertArrayEquals(b2.getCols(), expectedCols, "Columns incorrect");
+        assertArrayEquals(b2.getMains(), expectedMains, "Main diagonals incorrect");
+        assertArrayEquals(b2.getAntis(), expectedAntis, "Anti diagonals incorrect");
+    }
 }
