@@ -71,4 +71,33 @@ class QueensSolverTest {
             assertFalse(b.testValidPosition(positions[i]));
         }
     }
+    
+    /**
+     * Ensure coordinates can be cleared.
+     */
+    @Test void coordsCanBeCleared() {
+        // Place a queen and make assertions about its placement
+        Board b = new Board(2);
+        Coords queen = new Coords(0, 1);
+        b.placeQueen(queen);
+        boolean[] expectedRows = {true, false};
+        boolean[] expectedCols = {false, true};
+        boolean[] expectedMains = {false, true, false};
+        boolean[] expectedAntis = {true, false, false};
+        assertArrayEquals(b.getRows(), expectedRows, "Rows unequal");
+        assertArrayEquals(b.getCols(), expectedCols, "Columns unequal");
+        assertArrayEquals(b.getMains(), expectedMains, "Main diagonals unequal");
+        assertArrayEquals(b.getAntis(), expectedAntis, "Anti diagonals unequal");
+        
+        // Now remove that queen and assert all rows, columns, mains, and antis are now false
+        b.clearQueen();
+        boolean[] expectedRowsCleared = {false, false};
+        boolean[] expectedColsCleared = {false, false};
+        boolean[] expectedMainsCleared = {false, false, false};
+        boolean[] expectedAntisCleared = {false, false, false};
+        assertArrayEquals(b.getRows(), expectedRowsCleared, "Rows unequal");
+        assertArrayEquals(b.getCols(), expectedColsCleared, "Columns unequal");
+        assertArrayEquals(b.getMains(), expectedMainsCleared, "Main diagonals unequal");
+        assertArrayEquals(b.getAntis(), expectedAntisCleared, "Anti diagonals unequal");
+    }
 }
