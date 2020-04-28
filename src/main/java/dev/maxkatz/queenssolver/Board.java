@@ -95,6 +95,19 @@ public class Board {
     }
     
     /**
+     * Clears the latest-placed queen on the board.
+     * 
+     * @return A Coords object representing the removed queen.
+     */
+    public Coords clearQueen() {
+        Coords lastQueen = this.getLastQueen();
+        if(lastQueen != null) {
+            return this.queens.remove(this.queens.size() - 1);
+        }
+        return null;
+    }
+    
+    /**
      * Internal function for mapping the main diagonal to its
      * x-intercept.
      * 
@@ -138,6 +151,9 @@ public class Board {
      * queen on the board, or null if no queens are on the board.
      */
     public Coords getLastQueen() {
+        if(this.queens.size() == 0) {
+            return null;
+        }
         return this.queens.get(this.queens.size() - 1);
     }
     
