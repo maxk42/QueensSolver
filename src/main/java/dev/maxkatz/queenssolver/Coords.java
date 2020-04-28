@@ -4,8 +4,8 @@
 package dev.maxkatz.queenssolver;
 
 public class Coords {
-    int x;
-    int y;
+    public int x;
+    public int y;
     
     public Coords(int x, int y) {
         this.x = x;
@@ -15,6 +15,10 @@ public class Coords {
     public Coords(Coords fromCoords) {
         this.x = fromCoords.x;
         this.y = fromCoords.y;
+    }
+    
+    public boolean equals(Coords c) {
+        return this.x == c.x && this.y == c.y;
     }
 }
 
