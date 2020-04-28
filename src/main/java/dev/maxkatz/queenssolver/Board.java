@@ -1,5 +1,6 @@
 package dev.maxkatz.queenssolver;
 
+import java.util.ArrayList;
 import lombok.Getter;   // Use lombok to support @Getter annotations for testing purposes
 
 /**
@@ -46,7 +47,7 @@ public class Board {
     /**
      * Array storing the coordinates of each Queen placed on the board
      */
-    public Coords[] queens;
+    public ArrayList<Coords> queens;
     
     /**
      * Set size and initialize properties
@@ -60,13 +61,12 @@ public class Board {
         this.cols = new boolean[size];
         this.mains = new boolean[2 * size - 1];
         this.antis = new boolean[2 * size - 1];
-        this.queens = new Coords[size];
+        this.queens = new ArrayList<Coords>();
         for(int i = 0; i < size; i++) {
             this.rows[i] = false;
             this.cols[i] = false;
-            this.queens[i] = null;
         }
-        for(int i = 0; i < 2 * size - 1; i++) {
+        for(int i = 0; i < 2 * size - 1; i++) { // mains and antis are structured to use 2n-1 elements
             this.mains[i] = false;
             this.antis[i] = false;
         }
@@ -78,13 +78,7 @@ public class Board {
      * @return integer count of queens on the board
      */
     public int queenCount() {
-        int count = 0;
-        for(Coords c : this.queens) {
-            if(c != null) {
-                count++;
-            }
-        }
-        return count;
+        return this.queens.size();
     }
     
     /**
@@ -93,13 +87,11 @@ public class Board {
      * @param square The coordinates at which to place this queen
      */
     public void placeQueen(Coords square) {
-        int idx = this.getLastQueenIndex();
-        idx++;
-        this.queens[idx] = square;
+        this.queens.add(square);
         this.rows[square.x] = true;
         this.cols[square.y] = true;
-        this.mains[this.getMainDiagIdx(square)] = true;
-        this.antis[this.getAntiDiagIdx(square)] = true;
+        this.mains[this.getMainDiagIndex(square)] = true;
+        this.antis[this.getAntiDiagIndex(square)] = true;
     }
     
     /**
@@ -116,7 +108,7 @@ public class Board {
      * @return Integer representing an index in the range [0, n - 1]
      * into the mains[] array.
      */
-    private int getMainDiagIdx(Coords c) {
+    private int getMainDiagIndex(Coords c) {
         return c.x + c.y;
     }
     
@@ -124,7 +116,7 @@ public class Board {
      * Internal function for mapping the anti-diagonal to its
      * x-intercept.
      * 
-     * Again, like getmainDiagIdx() this allows us to identify all
+     * Again, like getmainDiagIndex() this allows us to identify all
      * positions to which a queen placed at the given coordinates
      * may move.
      * 
@@ -134,23 +126,9 @@ public class Board {
      * @return Integer representing an index in the range [0, n - 1]
      * into the antis[] array.
      */
-    private int getAntiDiagIdx(Coords c) {
+    private int getAntiDiagIndex(Coords c) {
         return c.x - c.y + this.size - 1;           // We add (this.size - 1) to transform this into an array index in
                                                     // the range [0, n - 1]
-    }
-    
-    /**
-     * Returns the index into the queens[] array of the last queen placed there.
-     * 
-     * @return Integer in the range [0, n] or -1 if no queens are present.
-     */
-    public int getLastQueenIndex() {
-        for(int i = this.size - 1; i >= 0; i--) {
-            if(this.queens[i] != null) {
-                return i;
-            }
-        }
-        return -1;
     }
     
     /**
@@ -160,11 +138,7 @@ public class Board {
      * queen on the board, or null if no queens are on the board.
      */
     public Coords getLastQueen() {
-        int lastQueenIndex = this.getLastQueenIndex();
-        if(lastQueenIndex == -1) {
-            return null;
-        }
-        return this.queens[lastQueenIndex];
+        return this.queens.get(this.queens.size() - 1);
     }
     
     /**
