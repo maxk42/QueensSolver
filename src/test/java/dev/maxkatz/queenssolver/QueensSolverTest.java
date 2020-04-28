@@ -34,10 +34,10 @@ class QueensSolverTest {
         boolean[] expectedMains = {false, false, false, true, false, false, false};
         boolean[] expectedAntis = {false, false, true, false, false, false, false};
         b.placeQueen(queen);
-        assertArrayEquals(b.getRows(), expectedRows, "Rows unequal");
-        assertArrayEquals(b.getCols(), expectedCols, "Columns unequal");
-        assertArrayEquals(b.getMains(), expectedMains, "Main diagonals unequal");
-        assertArrayEquals(b.getAntis(), expectedAntis, "Anti diagonals unequal");
+        assertArrayEquals(expectedRows, b.getRows(), "Rows unequal");
+        assertArrayEquals(expectedCols, b.getCols(), "Columns unequal");
+        assertArrayEquals(expectedMains, b.getMains(), "Main diagonals unequal");
+        assertArrayEquals(expectedAntis, b.getAntis(), "Anti diagonals unequal");
     }
     
     /**
@@ -61,7 +61,7 @@ class QueensSolverTest {
         };
         b.placeQueen(queen);
         for(int i = 0; i < 9; i++) {
-            assertEquals(b.testValidPosition(positions[i]), expectedResults[i], "testValidPositions() returned unexpected result");
+            assertEquals(expectedResults[i], b.testValidPosition(positions[i]), "testValidPositions() returned unexpected result");
         }
         
         // Second test: No valid moves for the center position on a 3x3 board
@@ -85,10 +85,10 @@ class QueensSolverTest {
         boolean[] expectedCols = {false, true};
         boolean[] expectedMains = {false, true, false};
         boolean[] expectedAntis = {true, false, false};
-        assertArrayEquals(b.getRows(), expectedRows, "Rows unequal");
-        assertArrayEquals(b.getCols(), expectedCols, "Columns unequal");
-        assertArrayEquals(b.getMains(), expectedMains, "Main diagonals unequal");
-        assertArrayEquals(b.getAntis(), expectedAntis, "Anti diagonals unequal");
+        assertArrayEquals(expectedRows, b.getRows(), "Rows unequal");
+        assertArrayEquals(expectedCols, b.getCols(), "Columns unequal");
+        assertArrayEquals(expectedMains, b.getMains(), "Main diagonals unequal");
+        assertArrayEquals(expectedAntis, b.getAntis(), "Anti diagonals unequal");
         
         // Now remove that queen and assert all rows, columns, mains, and antis are now false
         b.clearQueen();
@@ -96,10 +96,10 @@ class QueensSolverTest {
         boolean[] expectedColsCleared = {false, false};
         boolean[] expectedMainsCleared = {false, false, false};
         boolean[] expectedAntisCleared = {false, false, false};
-        assertArrayEquals(b.getRows(), expectedRowsCleared, "Rows unequal");
-        assertArrayEquals(b.getCols(), expectedColsCleared, "Columns unequal");
-        assertArrayEquals(b.getMains(), expectedMainsCleared, "Main diagonals unequal");
-        assertArrayEquals(b.getAntis(), expectedAntisCleared, "Anti diagonals unequal");
+        assertArrayEquals(expectedRowsCleared, b.getRows(), "Rows unequal");
+        assertArrayEquals(expectedColsCleared, b.getCols(), "Columns unequal");
+        assertArrayEquals(expectedMainsCleared, b.getMains(), "Main diagonals unequal");
+        assertArrayEquals(expectedAntisCleared, b.getAntis(), "Anti diagonals unequal");
     }
     
     /**
@@ -117,10 +117,10 @@ class QueensSolverTest {
         boolean[] expectedCols = {false, true};
         boolean[] expectedMains = {false, true, false};
         boolean[] expectedAntis = {true, false, false};
-        assertArrayEquals(b2.getRows(), expectedRows, "Rows incorrect");
-        assertArrayEquals(b2.getCols(), expectedCols, "Columns incorrect");
-        assertArrayEquals(b2.getMains(), expectedMains, "Main diagonals incorrect");
-        assertArrayEquals(b2.getAntis(), expectedAntis, "Anti diagonals incorrect");
+        assertArrayEquals(expectedRows, b2.getRows(), "Rows incorrect");
+        assertArrayEquals(expectedCols, b2.getCols(), "Columns incorrect");
+        assertArrayEquals(expectedMains, b2.getMains(), "Main diagonals incorrect");
+        assertArrayEquals(expectedAntis, b2.getAntis(), "Anti diagonals incorrect");
     }
     
     /**
@@ -131,7 +131,7 @@ class QueensSolverTest {
         for(int i = 1; i <= solutionCounts.length; i++) {
             QueensSolver qs = new QueensSolver();
             ArrayList<Board> solutions = qs.testQueens(i);
-            assertEquals(solutions.size(), solutionCounts[i - 1], "Incorrect number of solutions.");
+            assertEquals(solutionCounts[i - 1], solutions.size(), "Incorrect number of solutions.");
         }
     }
     
@@ -142,10 +142,10 @@ class QueensSolverTest {
         QueensSolver qs = new QueensSolver();
         ArrayList<Board> solutions = qs.testQueens(8);
         qs.stripColinearTriplets(solutions);
-        assertEquals(solutions.size(), 8, "Incorrect number of solutions.");
+        assertEquals(8, solutions.size(), "Incorrect number of solutions.");
         solutions.clear();
         solutions = qs.testQueens(5);
         qs.stripColinearTriplets(solutions);
-        assertEquals(solutions.size(), 0, "Incorrect number of solutions.");
+        assertEquals(0, solutions.size(), "Incorrect number of solutions.");
     }
 }
