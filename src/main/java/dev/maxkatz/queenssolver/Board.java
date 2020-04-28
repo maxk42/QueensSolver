@@ -172,7 +172,7 @@ public class Board {
      * 
      * @return boolean
      */
-    public boolean testValidPosition(Coord position) {
+    public boolean testValidPosition(Coords position) {
         return !(
                 this.rows[position.x]
                 | this.cols[position.y]
