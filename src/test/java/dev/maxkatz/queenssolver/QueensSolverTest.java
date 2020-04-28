@@ -7,8 +7,35 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class QueensSolverTest {
-    @Test void appHasAGreeting() {
-        QueensSolver classUnderTest = new QueensSolver();
-        assertNotNull(classUnderTest.getGreeting(), "app should have a greeting");
+    /**
+     * Ensure coordinates can be created and compared properly.
+     */
+    @Test void coordsBehave() {
+        Coords c1 = new Coords(0, 0);
+        Coords c2 = new Coords(1, 2);
+        Coords c3 = new Coords(1, 2);
+        assertFalse(c1.equals(c2));
+        assertFalse(c1.equals(c3));
+        assertFalse(c2.equals(c1));
+        assertTrue(c2.equals(c3));
+        assertFalse(c3.equals(c1));
+        assertTrue(c3.equals(c2));
+    }
+    
+    /**
+     * Check that the board state is as expected when placing queens.
+     */
+    @Test void queenCanBePlaced() {
+        Board b = new Board(4);
+        Coords queen = new Coords(1, 2);
+        boolean[] expectedRows = {false, true, false, false};
+        boolean[] expectedCols = {false, false, true, false};
+        boolean[] expectedMains = {false, false, false, true, false, false, false};
+        boolean[] expectedAntis = {false, false, true, false, false, false, false};
+        b.placeQueen(queen);
+        assertArrayEquals(b.getRows(), expectedRows, "Rows unequal");
+        assertArrayEquals(b.getCols(), expectedCols, "Columns unequal");
+        assertArrayEquals(b.getMains(), expectedMains, "Main diagonals unequal");
+        assertArrayEquals(b.getAntis(), expectedAntis, "Anti diagonals unequal");
     }
 }
