@@ -101,10 +101,16 @@ public class Board {
      */
     public Coords clearQueen() {
         Coords lastQueen = this.getLastQueen();
-        if(lastQueen != null) {
-            return this.queens.remove(this.queens.size() - 1);
+        if(lastQueen == null) {
+            return null;
         }
-        return null;
+        Coords removedQueen = this.queens.remove(this.queens.size() - 1);
+        // Unset our board's state flags
+        this.rows[removedQueen.x] = false;
+        this.cols[removedQueen.y] = false;
+        this.mains[this.getMainDiagIndex(removedQueen)] = false;
+        this.antis[this.getAntiDiagIndex(removedQueen)] = false;
+        return removedQueen;
     }
     
     /**
