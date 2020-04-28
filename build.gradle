@@ -29,6 +29,13 @@ dependencies {
 
     // Use JUnit Jupiter Engine for testing.
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.6.0'
+    
+    // Lombok for getter / setter annotations
+    compileOnly 'org.projectlombok:lombok:1.18.12'
+    annotationProcessor 'org.projectlombok:lombok:1.18.12'
+	
+    testCompileOnly 'org.projectlombok:lombok:1.18.12'
+    testAnnotationProcessor 'org.projectlombok:lombok:1.18.12'
 }
 
 application {

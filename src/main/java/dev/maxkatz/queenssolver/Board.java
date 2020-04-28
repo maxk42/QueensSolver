@@ -1,5 +1,7 @@
 package dev.maxkatz.queenssolver;
 
+import lombok.Getter;   // Use lombok to support @Getter annotations for testing purposes
+
 /**
  * This class represents an n-by-n chessboard, and provides utilities
  * for placing or removing queens and for analyzing the current
@@ -17,30 +19,34 @@ public class Board {
      * Array of booleans indicating the current state of the board: e.g. is the
      * row indicated by a given index into this array occupied by a queen?
      */
+    @Getter
     private boolean[] rows;
     
     /**
      * Array of booleans indicating the current state of the columns of the
      * board
      */
+    @Getter
     private boolean[] cols;
     
     /**
      * Array of main diagonal intercepts.  In matrix math, the main diagonal
      * runs from the upper-left to lower-right corner like so: ↘
      */
+    @Getter
     private boolean[] mains;
     
     /**
      * Again, in matrix math the anti diagonal runs from upper-right to
      * lower-left corner like so: ↙
      */
+    @Getter
     private boolean[] antis;
     
     /**
      * Array storing the coordinates of each Queen placed on the board
      */
-    private Coords[] queens;
+    public Coords[] queens;
     
     /**
      * Set size and initialize properties
@@ -52,15 +58,17 @@ public class Board {
         this.size = size;
         this.rows = new boolean[size];
         this.cols = new boolean[size];
-        this.mains = new boolean[size];
-        this.antis = new boolean[size];
+        this.mains = new boolean[2 * size - 1];
+        this.antis = new boolean[2 * size - 1];
         this.queens = new Coords[size];
         for(int i = 0; i < size; i++) {
             this.rows[i] = false;
             this.cols[i] = false;
+            this.queens[i] = null;
+        }
+        for(int i = 0; i < 2 * size - 1; i++) {
             this.mains[i] = false;
             this.antis[i] = false;
-            this.queens[i] = null;
         }
     }
     
